@@ -1,6 +1,6 @@
 # ⚖️ Concili_ON
 
-**Motor de validación de ideas en 5 fases con 7 personalidades y score ponderado.**
+**Motor de validación de ideas en 6 fases con 10 personalidades y score ponderado.**
 
 Concili_ON evalúa cualquier idea de negocio, proyecto o startup usando un sistema multi-personalidad con pesos asimétricos. Cada personalidad representa un ángulo distinto del análisis, desde la visión de mercado hasta la viabilidad financiera, y emite un score ponderado que converge en un **Score Real** con penalizaciones por contradicciones detectadas.
 
@@ -9,28 +9,31 @@ Concili_ON evalúa cualquier idea de negocio, proyecto o startup usando un siste
 ## Cómo funciona
 
 ```
-Idea → 7 personalidades → scores → pesos → contradicciones → Score Real + veredicto
+Idea → FASE 0 (Filtro Hermes) → 7 personalidades → scores → pesos → contradicciones → Score Real + veredicto → (opcional) Ariadna + (opcional) Segunda Opinión
 ```
 
-### Las 7 personalidades
+### Las 10 personalidades
 
 | Personalidad | Peso | Rol |
 |---|---|---|
-| **Adán** | 7% | Visionario — impacto, escalabilidad |
-| **Eva** | 15% | Risk Manager — riesgos críticos |
-| **Bruno** | 7% | El Lego — claridad del concepto |
+| **Prometeo** | 7% | Visionario — impacto, escalabilidad |
+| **Atenea** | 15% | Risk Manager — riesgos críticos |
+| **Hermes** | 7% | El Mensajero — claridad del concepto |
 | **Midas** | 25% | El Cliente — disposición a pagar |
-| **Ben** | 6% | Niño UX — fricción de uso |
-| **Tesla** | 15% | Ingeniero — viabilidad técnica |
-| **Warren** | 25% | Financiero — costos y ROI |
+| **Eros** | 6% | Niño UX — fricción de uso |
+| **Hefesto** | 15% | Ingeniero — viabilidad técnica |
+| **Pluto** | 25% | Financiero — costos y ROI |
+| **Ariadna** | — | Plan de Rescate (si score < 60%) |
 
-### Las 5 fases
+### Las 6 fases
 
-1. **Análisis Inicial** — Adán, Eva, Bruno
-2. **Validación de Mercado** — Midas, Ben
-3. **Evaluación Técnica y Financiera** — Tesla, Warren
-4. **Decisión y Estrategia** — Zeus (contradicciones) + Salomón (experimento)
-5. **Consejo de Inversión** — Votación final de las 7 personalidades
+0. **Filtro Hermes** — Claridad mínima (detiene el análisis si es vaga)
+1. **Análisis Inicial** — Prometeo, Atenea, Hermes
+2. **Validación de Mercado** — Midas, Eros
+3. **Evaluación Técnica y Financiera** — Hefesto, Pluto
+4. **Decisión y Estrategia** — Zeus (score + polarización + contradicciones) + Odiseo (experimento)
+5. 🧶 **Ariadna** — Plan de Rescate (solo si score < 60%)
+6. **Consejo de Inversión** — Votación final de las 7 personalidades
 
 ---
 
@@ -41,6 +44,7 @@ Cada análisis genera una carpeta con el slug de la idea:
 ```
 analisis/<slug-idea>/
 ├── <slug-idea>-concili-on.md     # Informe textual completo
+├── <slug-idea>-concili-on.json   # Datos estructurados (scores, polarización, contradicciones)
 └── <slug-idea>-concili-on.html   # HTML offline con gráficas (0 CDN, 0 dependencias)
 ```
 
@@ -49,6 +53,7 @@ analisis/<slug-idea>/
 ```
 analisis/offline-first-mipymes-latam/
 ├── offline-first-mipymes-latam-concili-on.md
+├── offline-first-mipymes-latam-concili-on.json
 └── offline-first-mipymes-latam-concili-on.html
 ```
 

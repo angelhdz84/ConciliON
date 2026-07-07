@@ -3,3 +3,12 @@ node_modules/
 *.log
 .DS_Store
 Thumbs.db
+
+# Legacy drafts — never push
+ConciliON_Idea.md
+ConciliON_Idea.html
+ConciliON_Idea2.md
+ConciliON_Idea2.html
+
+# Analysis outputs — never push
+analisis/

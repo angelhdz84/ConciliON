@@ -28,28 +28,29 @@
       <div class="crossnote markdown-preview  ">
       
 <h1 id="manual-de-concili_on--motor-de-validación-de-ideas">Manual de Concili_ON — Motor de Validación de Ideas </h1>
-<h2 id="versión-20--julio-2026">Versión 2.0 | Julio 2026 </h2>
+<h2 id="versión-22--julio-2026">Versión 2.2 | Julio 2026 </h2>
 <hr>
 <h2 id="índice">Índice </h2>
 <ol>
 <li><a href="#1-qu%C3%A9-es-concili_on">¿Qué es Concili_ON?</a></li>
 <li><a href="#2-instalaci%C3%B3n-y-activaci%C3%B3n">Instalación y activación</a></li>
 <li><a href="#3-c%C3%B3mo-usar-la-skill">Cómo usar la skill</a></li>
-<li><a href="#4-las-9-personalidades">Las 9 personalidades</a></li>
-<li><a href="#5-las-5-fases-del-an%C3%A1lisis">Las 5 fases del análisis</a></li>
+<li><a href="#4-las-10-personalidades">Las 10 personalidades</a></li>
+<li><a href="#5-las-6-fases-del-an%C3%A1lisis">Las 6 fases del análisis</a></li>
 <li><a href="#6-sistema-de-puntuaci%C3%B3n">Sistema de puntuación</a></li>
 <li><a href="#7-penalizaci%C3%B3n-por-contradicciones">Penalización por contradicciones</a></li>
 <li><a href="#8-veredicto-y-sem%C3%A1foro">Veredicto y semáforo</a></li>
 <li><a href="#9-%C3%ADndice-de-incertidumbre-y-confianza">Índice de incertidumbre y confianza</a></li>
 <li><a href="#10-consejo-de-inversi%C3%B3n">Consejo de Inversión</a></li>
-<li><a href="#11-casos-de-prueba">Casos de prueba</a></li>
-<li><a href="#12-resultados-del-benchmark">Resultados del benchmark</a></li>
-<li><a href="#13-historial-de-versiones">Historial de versiones</a></li>
-<li><a href="#14-preguntas-frecuentes">Preguntas frecuentes</a></li>
+<li><a href="#11-modo-segunda-opini%C3%B3n">Modo Segunda Opinión</a></li>
+<li><a href="#12-casos-de-prueba">Casos de prueba</a></li>
+<li><a href="#13-resultados-del-benchmark">Resultados del benchmark</a></li>
+<li><a href="#14-historial-de-versiones">Historial de versiones</a></li>
+<li><a href="#15-preguntas-frecuentes">Preguntas frecuentes</a></li>
 </ol>
 <hr>
 <h2 id="1-qué-es-concili_on">1. ¿Qué es Concili_ON? </h2>
-<p>Concili_ON es un motor de validación de ideas de negocio que simula un consejo de 9 expertos con personalidades, sesgos y pesos definidos. Cada experto analiza la idea desde su especialidad, asigna un score y justifica su posición. Luego, un juez (Zeus) detecta contradicciones entre ellos, aplica penalizaciones y calcula un Score Real ponderado. Finalmente, el Consejo de Inversión vota si poner dinero propio en la idea.</p>
+<p>Concili_ON es un motor de validación de ideas de negocio que simula un consejo de 10 expertos con personalidades, sesgos y pesos definidos. Cada experto analiza la idea desde su especialidad, asigna un score y justifica su posición. Luego, un juez (Zeus) detecta contradicciones entre ellos, aplica penalizaciones y calcula un Score Real ponderado. Finalmente, el Consejo de Inversión vota si poner dinero propio en la idea.</p>
 <p><strong>¿Qué lo hace diferente?</strong></p>
 <ul>
 <li>No promedia opiniones: usa pesos asimétricos (finanzas y mercado pesan 50%)</li>
@@ -61,7 +62,7 @@
 <h2 id="2-instalación-y-activación">2. Instalación y activación </h2>
 <h3 id="ubicación">Ubicación </h3>
 <pre data-role="codeBlock" data-info="" class="language-text"><code>C:\Users\Angel\.agents\skills\concili-on\
-├── SKILL.md              ← Motor principal (257 líneas)
+├── SKILL.md              ← Motor principal (~380 líneas)
 ├── manual_ConciliON.md   ← Este documento
 └── evals/
     └── evals.json        ← Casos de prueba (3 escenarios)
@@ -110,21 +111,25 @@ Cliente objetivo: [quién paga]
 Modelo de negocio: [cómo genera ingresos]
 </code></pre><p><strong>Opción B — Libre:</strong> Describe la idea como quieras. La skill te pedirá los campos faltantes antes de evaluar.</p>
 <h3 id="paso-2-recibe-el-análisis">Paso 2: Recibe el análisis </h3>
-<p>El motor ejecuta 5 fases automáticamente. Cada fase despliega el análisis de las personalidades correspondientes. Al final obtienes:</p>
+<p>El motor ejecuta 6 fases automáticamente (más Ariadna y Segunda Opinión si aplican). Cada fase despliega el análisis de las personalidades correspondientes. Al final obtienes:</p>
 <ul>
+<li>FASE 0: Resultado del Filtro Hermes (✅ pasa / ❌ rechaza)</li>
 <li>Score Matemático (ponderación pura)</li>
 <li>Tabla de contradicciones detectadas</li>
+<li>Índice de Polarización (σ: baja/media/alta)</li>
 <li>Penalización aplicada por Zeus</li>
 <li>Score Real (después de penalizar)</li>
 <li>Índice de incertidumbre</li>
 <li>Nivel de confianza del análisis</li>
 <li>Veredicto con semáforo</li>
+<li>🧶 Plan de Rescate Ariadna (si Score Real &lt; 60%)</li>
 <li>Votos del Consejo de Inversión</li>
+<li>🔄 Modo Segunda Opinión (opcional, si polarización alta)</li>
 </ul>
 <h3 id="paso-3-iteración">Paso 3: iteración </h3>
 <p>Si el veredicto es 🟠 REQUIERE PIVOTE o 🔴 RECHAZAR, puedes modificar la idea con los datos que faltaban y volver a ejecutar el análisis.</p>
 <hr>
-<h2 id="4-las-9-personalidades">4. Las 9 personalidades </h2>
+<h2 id="4-las-10-personalidades">4. Las 10 personalidades </h2>
 <h3 id="41-perfiles-con-score-pesan-en-el-resultado-final">4.1 Perfiles con score (pesan en el resultado final) </h3>
 <table>
 <thead>
@@ -139,7 +144,7 @@ Modelo de negocio: [cómo genera ingresos]
 <tbody>
 <tr>
 <td>1</td>
-<td><strong>Warren Buffett</strong></td>
+<td><strong>Pluto</strong></td>
 <td>Financiero</td>
 <td><strong>25%</strong></td>
 <td>Costos, margen, ROI, punto de equilibrio</td>
@@ -153,36 +158,36 @@ Modelo de negocio: [cómo genera ingresos]
 </tr>
 <tr>
 <td>3</td>
-<td><strong>Eva Perón</strong></td>
+<td><strong>Atenea</strong></td>
 <td>Risk Manager</td>
 <td><strong>15%</strong></td>
 <td>Riesgos críticos, costos ocultos, fortalezas/debilidades</td>
 </tr>
 <tr>
 <td>4</td>
-<td><strong>Nikola Tesla</strong></td>
+<td><strong>Hefesto</strong></td>
 <td>Ingeniero</td>
 <td><strong>15%</strong></td>
 <td>Viabilidad técnica, complejidad, dependencias</td>
 </tr>
 <tr>
 <td>5</td>
-<td><strong>Adán</strong></td>
+<td><strong>Prometeo</strong></td>
 <td>Visionario</td>
 <td><strong>7%</strong></td>
 <td>Impacto, escalabilidad, visión a 5 años</td>
 </tr>
 <tr>
 <td>6</td>
-<td><strong>Bruno Munari</strong></td>
-<td>El Lego</td>
+<td><strong>Hermes</strong></td>
+<td>El Mensajero</td>
 <td><strong>7%</strong></td>
 <td>Claridad conceptual, comunicación de la idea</td>
 </tr>
 <tr>
 <td>7</td>
-<td><strong>Benjamin Graham</strong></td>
-<td>UX / Niño 12 años</td>
+<td><strong>Eros</strong></td>
+<td>UX / Niño</td>
 <td><strong>6%</strong></td>
 <td>Fricción de uso, intuición, experiencia</td>
 </tr>
@@ -214,14 +219,37 @@ Modelo de negocio: [cómo genera ingresos]
 </tr>
 <tr>
 <td>9</td>
-<td><strong>Salomón</strong></td>
+<td><strong>Odiseo</strong></td>
 <td>El Estratega</td>
 <td>Diseña experimento barato para validar la hipótesis crítica</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Ariadna</strong></td>
+<td>El Plan de Rescate</td>
+<td>Propone mejoras concretas si Score Real &lt; 60% (no vota)</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="5-las-5-fases-del-análisis">5. Las 5 fases del análisis </h2>
+<h2 id="5-las-6-fases-del-análisis">5. Las 6 fases del análisis </h2>
+<h3 id="fase-0--filtro-hermes-claridad-mínima">FASE 0 — Filtro Hermes (Claridad Mínima) </h3>
+<table>
+<thead>
+<tr>
+<th>Personalidad</th>
+<th>Qué hace</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hermes (El Mensajero)</strong></td>
+<td>Evalúa si los 4 campos obligatorios son comprensibles para alguien fuera del sector. Si falla, detiene el análisis.</td>
+<td>✅ Pasa / ❌ Rechaza</td>
+</tr>
+</tbody>
+</table>
 <h3 id="fase-1--análisis-inicial">FASE 1 — Análisis Inicial </h3>
 <table>
 <thead>
@@ -233,17 +261,17 @@ Modelo de negocio: [cómo genera ingresos]
 </thead>
 <tbody>
 <tr>
-<td><strong>Adán (Visionario)</strong></td>
+<td><strong>Prometeo (Visionario)</strong></td>
 <td>Describe por qué la idea va a ganar. Cero negatividad. Proyecta a 5 años.</td>
 <td>Score /10 + Razón + Visión</td>
 </tr>
 <tr>
-<td><strong>Eva (Risk Manager)</strong></td>
+<td><strong>Atenea (Risk Manager)</strong></td>
 <td>Enumera riesgos clasificados por severidad. Da Top 3 Fortalezas y Top 3 Debilidades.</td>
 <td>Score /10 + Razón + Riesgos clasificados + F/D</td>
 </tr>
 <tr>
-<td><strong>Bruno (El Lego)</strong></td>
+<td><strong>Hermes (El Mensajero)</strong></td>
 <td>Explica la idea en lenguaje simple. Detecta confusión conceptual.</td>
 <td>Score /10 + Razón</td>
 </tr>
@@ -265,7 +293,7 @@ Modelo de negocio: [cómo genera ingresos]
 <td>Score /10 + Razón + Análisis competencia</td>
 </tr>
 <tr>
-<td><strong>Ben (Niño 12 años)</strong></td>
+<td><strong>Eros (El Niño)</strong></td>
 <td>Evalúa fricción de uso. ¿Un niño lo usaría sin instrucciones?</td>
 <td>Score /10 + Razón</td>
 </tr>
@@ -282,12 +310,12 @@ Modelo de negocio: [cómo genera ingresos]
 </thead>
 <tbody>
 <tr>
-<td><strong>Tesla (Ingeniero)</strong></td>
+<td><strong>Hefesto (Ingeniero)</strong></td>
 <td>Viabilidad técnica. ¿MVP en ❤️ meses? Clasifica complejidad y dependencias.</td>
 <td>Score /10 + Razón + Complejidad + Dependencias</td>
 </tr>
 <tr>
-<td><strong>Warren (Financiero)</strong></td>
+<td><strong>Pluto (Financiero)</strong></td>
 <td>Métricas financieras concretas: inversión inicial, margen, punto de equilibrio, mayor gasto.</td>
 <td>Score /10 + Razón + 5 métricas</td>
 </tr>
@@ -309,9 +337,48 @@ Modelo de negocio: [cómo genera ingresos]
 <td>Score Matemático → Penalización → Score Real</td>
 </tr>
 <tr>
-<td><strong>Salomón (El Estratega)</strong></td>
+<td><strong>Odiseo (El Estratega)</strong></td>
 <td>Diseña experimento de validación con protocolo científico completo.</td>
 <td>Hipótesis, Experimento, KPI, Criterios</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-ariadna--plan-de-rescate-solo-si-score-real--60">🧶 Ariadna — Plan de Rescate (solo si Score Real &lt; 60%) </h3>
+<p><em>Output progresivo según gravedad:</em></p>
+<table>
+<thead>
+<tr>
+<th>Score Real</th>
+<th>Modo</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 40% (🔴)</td>
+<td><strong>Completo</strong></td>
+<td>Diagnóstico + Mitigaciones (loop Atenea) + Matriz + 3 preguntas + Recomendación</td>
+</tr>
+<tr>
+<td>40–59% (🟠)</td>
+<td><strong>Ligero</strong></td>
+<td>Solo Matriz de apalancamiento + 3 preguntas socráticas</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Personalidad</th>
+<th>Qué hace</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ariadna</strong></td>
+<td>Diagnostica causas del rechazo, propone palancas de mejora y hace preguntas socráticas.</td>
+<td>Según modo: Completo o Ligero</td>
 </tr>
 </tbody>
 </table>
@@ -340,20 +407,20 @@ Modelo de negocio: [cómo genera ingresos]
 <hr>
 <h2 id="6-sistema-de-puntuación">6. Sistema de puntuación </h2>
 <h3 id="pesos-asignados">Pesos asignados </h3>
-<pre data-role="codeBlock" data-info="" class="language-text"><code>Warren:  [X] * 0.25 = [Y]
-Midas:   [X] * 0.25 = [Y]
-Eva:     [X] * 0.15 = [Y]
-Tesla:   [X] * 0.15 = [Y]
-Adán:    [X] * 0.07 = [Y]
-Bruno:   [X] * 0.07 = [Y]
-Ben:     [X] * 0.06 = [Y]
-                         ——
-TOTAL:   [Suma de Y] / 10 = [Z]%
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Pluto:     [X] * 0.25 = [Y]
+Midas:     [X] * 0.25 = [Y]
+Atenea:    [X] * 0.15 = [Y]
+Hefesto:   [X] * 0.15 = [Y]
+Prometeo:  [X] * 0.07 = [Y]
+Hermes:    [X] * 0.07 = [Y]
+Eros:      [X] * 0.06 = [Y]
+            ——
+TOTAL:     [Suma de Y] / 10 = [Z]%
 </code></pre><p><strong>Interpretación de los pesos:</strong></p>
 <ul>
-<li><strong>50%</strong> va a Finanzas y Mercado (Warren + Midas) — lo que realmente determina si un negocio funciona</li>
-<li><strong>30%</strong> va a Riesgos y Tecnología (Eva + Tesla) — los dos grandes filtros de realidad</li>
-<li><strong>20%</strong> va a Visión, Claridad y UX (Adán + Bruno + Ben) — importante pero no determinante</li>
+<li><strong>50%</strong> va a Finanzas y Mercado (Pluto + Midas) — lo que realmente determina si un negocio funciona</li>
+<li><strong>30%</strong> va a Riesgos y Tecnología (Atenea + Hefesto) — los dos grandes filtros de realidad</li>
+<li><strong>20%</strong> va a Visión, Claridad y UX (Prometeo + Hermes + Eros) — importante pero no determinante</li>
 </ul>
 <h3 id="score-matemático">Score Matemático </h3>
 <p>Es el resultado de la fórmula anterior, sin ajustes. Representa la media ponderada de todas las opiniones.</p>
@@ -396,14 +463,42 @@ Penalización final Zeus: -X%
 <li>Penalización máxima acumulable: <strong>-20%</strong></li>
 <li>Zeus puede ajustar <strong>±5%</strong> sobre la penalización base con justificación explícita</li>
 </ul>
+<h3 id="índice-de-polarización">Índice de Polarización </h3>
+<p>Zeus también calcula la desviación estándar (σ) entre los 7 scores para medir qué tan dividido está el consejo:</p>
+<table>
+<thead>
+<tr>
+<th>σ</th>
+<th>Nivel</th>
+<th>Efecto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 1.5</td>
+<td>🟢 <strong>Baja</strong></td>
+<td>Consenso general, confianza alta</td>
+</tr>
+<tr>
+<td>1.5–2.5</td>
+<td>🟡 <strong>Media</strong></td>
+<td>Divergencia manejable</td>
+</tr>
+<tr>
+<td>&gt; 2.5</td>
+<td>🔴 <strong>Alta</strong></td>
+<td>Consejo polarizado — considerar Segunda Opinión</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ejemplo">Ejemplo </h3>
 <pre data-role="codeBlock" data-info="" class="language-text"><code>Contradicción detectada   Grado       Penalización
 ──────────────────────    ─────       ────────────
 Mercado 10 vs Tecnología 2  Crítica    -15%
-Adán 9 vs Warren 3          Importante  -8%
+Prometeo 9 vs Pluto 3          Importante  -8%
                            ──────────
 Penalización base total:              -23% → recortado a -20%
-Ajuste Zeus (±5%):                    +2% (las métricas de Warren son robustas)
+Ajuste Zeus (±5%):                    +2% (las métricas de Pluto son robustas)
 Penalización final Zeus:              -18%
 </code></pre><hr>
 <h2 id="8-veredicto-y-semáforo">8. Veredicto y semáforo </h2>
@@ -422,7 +517,7 @@ Penalización final Zeus:              -18%
 <td>Z2 &gt; 80%</td>
 <td>🟢 <strong>APROBAR</strong></td>
 <td>Viabilidad alta</td>
-<td>Ejecutar el experimento de Salomón</td>
+<td>Ejecutar el experimento de Odiseo</td>
 </tr>
 <tr>
 <td>Z2 60–79%</td>
@@ -439,7 +534,7 @@ Penalización final Zeus:              -18%
 <tr>
 <td>Z2 &lt; 40%</td>
 <td>🔴 <strong>RECHAZAR</strong></td>
-<td>Warren/Tesla no soportan la visión de Adán</td>
+<td>Pluto/Hefesto no soportan la visión de Prometeo</td>
 <td></td>
 </tr>
 </tbody>
@@ -484,13 +579,13 @@ Rango probable real:               43% a 67%
 <p>Cada una de las 7 personalidades con score responde:</p>
 <pre data-role="codeBlock" data-info="" class="language-text"><code>| Personalidad | ¿Invertiría dinero propio? | Razón |
 |---|---|---|
-| Adán         | Sí                          | Tiene potencial de 10x |
-| Eva          | No                          | Demasiados riesgos regulatorios |
+| Prometeo         | Sí                          | Tiene potencial de 10x |
+| Atenea          | No                          | Demasiados riesgos regulatorios |
 | Midas        | Solo después de validar     | El mercado no está probado |
-| Tesla        | No                          | MVP requiere 6+ meses |
-| Warren       | Solo después de validar     | Gastos iniciales altos |
-| Bruno        | Sí                          | La idea es muy clara |
-| Ben          | Sí                          | Experiencia intuitiva |
+| Hefesto        | No                          | MVP requiere 6+ meses |
+| Pluto       | Solo después de validar     | Gastos iniciales altos |
+| Hermes       | Sí                          | La idea es muy clara |
+| Eros         | Sí                          | Experiencia intuitiva |
 </code></pre><h3 id="votos-finales">Votos finales </h3>
 <ul>
 <li>✅ A favor: 3</li>
@@ -500,7 +595,17 @@ Rango probable real:               43% a 67%
 <h3 id="decisión-del-consejo">Decisión del Consejo </h3>
 <p>Una frase que resume qué haría el consejo con su dinero.</p>
 <hr>
-<h2 id="11-casos-de-prueba">11. Casos de prueba </h2>
+<h2 id="11-modo-segunda-opinión">11. Modo Segunda Opinión </h2>
+<p><em>Se activa si el usuario lo solicita o si el Índice de Polarización es &gt; 2.5.</em></p>
+<p>Las personalidades con score &lt; 5/10 son re-evaluadas por separado. Cada una recibe una segunda oportunidad para ajustar su score basándose en nueva evidencia.</p>
+<p><strong>Reglas:</strong></p>
+<ol>
+<li>Solo se re-evalúan personalidades con score original &lt; 5/10</li>
+<li>Zeus y Ariadna no participan</li>
+<li>El Score Real se recalcula con los nuevos valores</li>
+</ol>
+<hr>
+<h2 id="12-casos-de-prueba">12. Casos de prueba </h2>
 <p>La skill incluye 3 casos de prueba en <code>evals/evals.json</code>:</p>
 <table>
 <thead>
@@ -528,12 +633,12 @@ Rango probable real:               43% a 67%
 <td>3</td>
 <td><strong>Red Doctores + Crypto</strong></td>
 <td>Red social descentralizada para doctores con pagos en crypto. Tiene datos completos pero contradicciones internas</td>
-<td>Tesla marca baja factibilidad técnica, Warren critica el modelo crypto, Zeus detecta contradicciones</td>
+<td>Hefesto marca baja factibilidad técnica, Pluto critica el modelo crypto, Zeus detecta contradicciones</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="12-resultados-del-benchmark">12. Resultados del benchmark </h2>
+<h2 id="13-resultados-del-benchmark">13. Resultados del benchmark </h2>
 <p>Evaluación comparativa: con la skill activada vs. sin la skill (modelo base).</p>
 <table>
 <thead>
@@ -579,21 +684,32 @@ Rango probable real:               43% a 67%
 <li>La diferencia es más notoria en el caso 3 (idea compleja con contradicciones internas)</li>
 </ul>
 <hr>
-<h2 id="13-historial-de-versiones">13. Historial de versiones </h2>
+<h2 id="14-historial-de-versiones">14. Historial de versiones </h2>
+<h3 id="v22-julio-2026--panteón-griego--6-mejoras">v2.2 (Julio 2026) — Panteón Griego + 6 mejoras </h3>
+<ul>
+<li><strong>Renombre completo a panteón griego:</strong> Prometeo (Adán), Atenea (Eva), Hefesto (Tesla), Pluto (Warren), Odiseo (Salomón)</li>
+<li><strong>Nueva FASE 0:</strong> Filtro Hermes — claridad mínima antes de cualquier análisis</li>
+<li><strong>Índice de Polarización:</strong> Desviación estándar de scores con semáforo (baja/media/alta)</li>
+<li><strong>Ariadna progresiva:</strong> Output completo si &lt; 40%, ligero si 40–59%</li>
+<li><strong>Mitigaciones Atenea → Ariadna:</strong> Loop que vincula riesgos críticos con mitigaciones</li>
+<li><strong>Export JSON:</strong> Tercer archivo de salida con datos estructurados</li>
+<li><strong>Modo Segunda Opinión:</strong> Re-evaluación de personalidades con score bajo si polarización alta</li>
+<li>373+ líneas, ~14 KB</li>
+</ul>
 <h3 id="v20-julio-2026--mejoras-estructurales">v2.0 (Julio 2026) — Mejoras estructurales </h3>
 <ul>
 <li>Separación de Score Matemático → Penalización Zeus → Score Real</li>
 <li>Penalización por contradicciones con tabla fija (-15%/-8%/-3%) + ajuste Zeus ±5%</li>
 <li>Nueva FASE 5: Consejo de Inversión con votos</li>
 <li>Cada personalidad justifica su score (1-3 oraciones)</li>
-<li>Eva clasifica riesgos por severidad (🔴 Crítico / 🟠 Importante / 🟡 Menor)</li>
-<li>Warren exige métricas cuantitativas (inversión inicial, margen, punto de equilibrio, mayor gasto)</li>
-<li>Tesla mide complejidad técnica (Muy Baja → Muy Alta) + dependencias externas</li>
+<li>Atenea clasifica riesgos por severidad (🔴 Crítico / 🟠 Importante / 🟡 Menor)</li>
+<li>Pluto exige métricas cuantitativas (inversión inicial, margen, punto de equilibrio, mayor gasto)</li>
+<li>Hefesto mide complejidad técnica (Muy Baja → Muy Alta) + dependencias externas</li>
 <li>Midas analiza competencia (alternativa actual, competidor fuerte, ventaja diferencial, motivo de cambio)</li>
-<li>Salomón usa protocolo científico (hipótesis, KPI, criterio de éxito, criterio de abandono)</li>
+<li>Odiseo usa protocolo científico (hipótesis, KPI, criterio de éxito, criterio de abandono)</li>
 <li>Índice de incertidumbre con 3 supuestos y rango probable</li>
 <li>Nivel de confianza del análisis (Alta / Media / Baja)</li>
-<li>Eva reporta Top 3 Fortalezas y Top 3 Debilidades</li>
+<li>Atenea reporta Top 3 Fortalezas y Top 3 Debilidades</li>
 <li>257 líneas, 9.7 KB</li>
 </ul>
 <h3 id="v10-julio-2026--lanzamiento-inicial">v1.0 (Julio 2026) — Lanzamiento inicial </h3>
@@ -604,7 +720,7 @@ Rango probable real:               43% a 67%
 <li>135 líneas, 5.5 KB</li>
 </ul>
 <hr>
-<h2 id="14-preguntas-frecuentes">14. Preguntas frecuentes </h2>
+<h2 id="15-preguntas-frecuentes">15. Preguntas frecuentes </h2>
 <p><strong>¿Puedo usar Concili_ON sin internet?</strong><br>
 Sí. La skill es 100% offline. No requiere APIs externas, CDNs ni conexión a internet.</p>
 <p><strong>¿Qué pasa si no tengo todos los datos de mi idea?</strong><br>
@@ -612,15 +728,15 @@ La skill te pedirá los 4 campos obligatorios (Problema, Solución, Cliente, Mod
 <p><strong>¿Cuánto tiempo toma el análisis?</strong><br>
 Depende del LLM, pero típicamente 10-30 segundos para generar las 5 fases completas.</p>
 <p><strong>¿Puedo modificar los pesos de las personalidades?</strong><br>
-Los pesos están fijos en el <a href="http://SKILL.md">SKILL.md</a> (Warren 25%, Midas 25%, Eva 15%, Tesla 15%, Adán 7%, Bruno 7%, Ben 6%). Si quieres modificarlos, edita el <a href="http://SKILL.md">SKILL.md</a> directamente.</p>
+Los pesos están fijos en el <a href="http://SKILL.md">SKILL.md</a> (Pluto 25%, Midas 25%, Atenea 15%, Hefesto 15%, Prometeo 7%, Hermes 7%, Eros 6%). Si quieres modificarlos, edita el <a href="http://SKILL.md">SKILL.md</a> directamente.</p>
 <p><strong>¿Qué significa que Zeus aplique una penalización?</strong><br>
-Significa que encontró contradicciones graves entre las personalidades (ej: Madas da 10/10 en mercado pero Tesla da 2/10 en tecnología). En lugar de ignorar el conflicto, Zeus reduce el Score Matemático para reflejar la inconsistencia.</p>
+Significa que encontró contradicciones graves entre las personalidades (ej: Midas da 10/10 en mercado pero Hefesto da 2/10 en tecnología). En lugar de ignorar el conflicto, Zeus reduce el Score Matemático para reflejar la inconsistencia.</p>
 <p><strong>¿Qué hago si el veredicto es 🟠 o 🔴?</strong><br>
-Revisa las alertas de Zeus y las debilidades que identificó Eva. Consigue más datos sobre los puntos débiles y vuelve a ejecutar el análisis. Muchas ideas fracasan en la primera pasada.</p>
+Ariadna activa su Plan de Rescate. Si el Score Real es &lt; 40%, el plan es completo (diagnóstico, mitigaciones, matriz, preguntas). Si está entre 40–59%, el plan es ligero (solo matriz + preguntas). Sigue sus recomendaciones, consigue más datos sobre los puntos débiles y vuelve a ejecutar el análisis. Muchas ideas fracasan en la primera pasada.</p>
 <p><strong>¿Funciona para ideas no tecnológicas?</strong><br>
-Sí. Tesla evaluará la viabilidad técnica (que aplica a cualquier proceso, no solo software) y las demás personalidades analizan sin asumir tecnología.</p>
+Sí. Hefesto evaluará la viabilidad técnica (que aplica a cualquier proceso, no solo software) y las demás personalidades analizan sin asumir tecnología.</p>
 <hr>
-<p><em>Concili_ON v2.0 — Creado con el stack offline-first (Skill System + Markdown)</em></p>
+<p><em>Concili_ON v2.2 — Creado con el stack offline-first (Skill System + Markdown)</em></p>
 
       </div>
       
