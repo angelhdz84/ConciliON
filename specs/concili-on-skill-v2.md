@@ -6,6 +6,7 @@
 
 ## Cambios respecto a v1
 
+- **v2.3** — Emojis identificadores: cada personalidad tiene emoji único + rol + peso visible en outputs (.md/.html/.json). Tabla de identificación rápida en SKILL.md, AGENTS.md y toda salida. Prohibidos apodos no canónicos.
 - **Pantheon griego completo:** Adán→Prometeo, Eva→Atenea, Tesla→Hefesto, Warren→Pluto, Salomón→Odiseo
 - Nueva **Regla #6**: Generación obligatoria de archivos de salida `.md` + `.json` + `.html`
 - Nueva **FASE 0**: Filtro Hermes — claridad mínima
@@ -57,6 +58,37 @@ analisis/<slug-idea>/
 | Hefesto | 15% | Ingeniero |
 | Pluto | 25% | Financiero |
 | Ariadna | — | Plan de Rescate (si score < 60%) |
+
+## Sistema de Identificadores Visuales (v2.3)
+
+Cada personalidad tiene un identificador visual único (emoji) que debe aparecer en TODOS los outputs:
+
+- **En .md**: `### 🔥 Prometeo (Visionario · 7%)` como header, y `🔥 Prometeo` en tablas y menciones.
+- **En .html**: Mismo formato en barras, tarjetas y votación. Tooltip con `title="Nombre (Rol · Peso%) — frase clave"`.
+- **En .json**: Los keys del objeto `consejo.detalle` incluyen emoji: `"🔥prometeo": "condicional"`.
+
+### Reglas de uso
+
+1. **Obligatorio:** Toda mención a una personalidad en outputs debe incluir su emoji.
+2. **Obligatorio:** Toda mención debe incluir rol y peso: `🔥 Prometeo (Visionario · 7%)`.
+3. **Prohibido:** Usar apodos fuera de la tabla canónica (Adán, Eva, Bruno, Ben, Tesla, Warren, Salomón).
+4. **Consistencia:** Los identificadores deben ser idénticos en .md, .html y .json.
+5. **Tooltips en HTML:** Cada personalidad en barras, council-vote y contradicciones debe tener title descriptivo.
+
+### Mapa completo
+
+| Emoji | Canonical | Rol | Peso | Antiguo (prohibido) | Frase recordatoria |
+|---|---|---|---|---|---|
+| 🔥 | Prometeo | Visionario | 7% | Adán | "Va a ganar porque..." |
+| 🛡️ | Atenea | Risk Manager | 15% | Eva | "Esto puede salir mal si..." |
+| 📢 | Hermes | El Mensajero | 7% | Bruno | "En cristiano: esto es..." |
+| 💰 | Midas | El Cliente | 25% | — | "¿Yo pago por esto?" |
+| 🧒 | Eros | Niño UX | 6% | Ben | "¿Lo usa un niño de 12?" |
+| 🔧 | Hefesto | Ingeniero | 15% | Tesla | "¿Se puede construir?" |
+| 📊 | Pluto | Financiero | 25% | Warren | "¿Cierra el número?" |
+| ⚡ | Zeus | El Juez | — | — | "Chocaron, ¿quién gana?" |
+| 🧭 | Odiseo | El Estratega | — | Salomón | "Probemos algo barato primero" |
+| 🧶 | Ariadna | Plan de Rescate | — | — | Solo si score < 60% |
 
 ## Archivos del proyecto
 

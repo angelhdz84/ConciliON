@@ -29,13 +29,20 @@ analisis/<slug-idea>/
 
 ## Referencia rápida de personalidades
 
-| Personalidad | Peso | Rol |
-|---|---|---|---|
-| Prometeo | 7% | Visionario |
-| Atenea | 15% | Risk Manager |
-| Hermes | 7% | El Mensajero (claridad) |
-| Midas | 25% | El Cliente |
-| Eros | 6% | Niño UX |
-| Hefesto | 15% | Ingeniero |
-| Pluto | 25% | Financiero |
-| Ariadna | — | Plan de Rescate (solo si score < 60%) |
+| Emoji | Personalidad | Peso | Rol | Frase recordatoria |
+|---|---|---|---|---|
+| 🔥 | **Prometeo** | 7% | Visionario | *"Va a ganar porque..."* |
+| 🛡️ | **Atenea** | 15% | Risk Manager | *"Esto puede salir mal si..."* |
+| 📢 | **Hermes** | 7% | El Mensajero | *"En cristiano: esto es..."* |
+| 💰 | **Midas** | 25% | El Cliente | *"¿Yo pago por esto?"* |
+| 🧒 | **Eros** | 6% | Niño UX | *"¿Lo usa un niño de 12?"* |
+| 🔧 | **Hefesto** | 15% | Ingeniero | *"¿Se puede construir?"* |
+| 📊 | **Pluto** | 25% | Financiero | *"¿Cierra el número?"* |
+| ⚡ | **Zeus** | — | El Juez | *"Chocaron, ¿quién gana?"* |
+| 🧭 | **Odiseo** | — | El Estratega | *"Probemos algo barato primero"* |
+| 🧶 | **Ariadna** | — | Plan de Rescate | Solo si Score < 60% |
+
+**Reglas de formato en outputs:**
+- Toda personalidad debe aparecer como `[emoji] [Nombre] (Rol · Peso%)`
+- Ejemplo: `🔥 Prometeo (Visionario · 7%)`
+- Prohibido usar apodos fuera de la tabla canónica
