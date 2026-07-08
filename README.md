@@ -96,4 +96,6 @@ Describe tu idea al agente. Si el agente detecta que necesitas una validación d
 
 ## Licencia
 
-Uso interno — Ángel Hernández
+MIT — Ángel Hernández
+
+Puedes usar, modificar y distribuir este proyecto libremente. Ver el archivo [LICENSE](LICENSE) para más detalles.
