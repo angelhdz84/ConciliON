@@ -19,7 +19,7 @@ analisis/<slug-idea>/
 ### Reglas del HTML
 - 0 dependencias externas (sin CDN, Google Fonts, ni librerías JS)
 - Debe abrirse directamente desde el sistema de archivos sin servidor
-- Dark theme, responsive (desktop + mobile)
+- Light theme, responsive (desktop + mobile)
 - Incluir: gauge SVG del Score Real, barras de scores, waterfall de penalizaciones, tarjetas de contradicciones, índice de incertidumbre, Índice de Polarización, votación del consejo
 - Color del gauge según rango: rojo <40%, naranja 40-59%, ámbar 60-79%, verde >=80%
 
@@ -31,18 +31,18 @@ analisis/<slug-idea>/
 
 | Emoji | Personalidad | Peso | Rol | Frase recordatoria |
 |---|---|---|---|---|
-| 🔥 | **Prometeo** | 7% | Visionario | *"Va a ganar porque..."* |
-| 🛡️ | **Atenea** | 15% | Risk Manager | *"Esto puede salir mal si..."* |
+| 👁️ | **Adán** | 7% | Visionario | *"Va a ganar porque..."* |
+| 🛡️ | **Eva** | 15% | Risk Manager | *"Esto puede salir mal si..."* |
 | 📢 | **Hermes** | 7% | El Mensajero | *"En cristiano: esto es..."* |
 | 💰 | **Midas** | 25% | El Cliente | *"¿Yo pago por esto?"* |
-| 🧒 | **Eros** | 6% | Niño UX | *"¿Lo usa un niño de 12?"* |
-| 🔧 | **Hefesto** | 15% | Ingeniero | *"¿Se puede construir?"* |
-| 📊 | **Pluto** | 25% | Financiero | *"¿Cierra el número?"* |
+| 🧒 | **Loki** | 6% | Niño UX | *"¿Lo usa un niño de 12?"* |
+| 🔧 | **Tesla** | 15% | Ingeniero | *"¿Se puede construir?"* |
+| 📊 | **Dédalo** | 25% | Financiero | *"¿Cierra el número?"* |
 | ⚡ | **Zeus** | — | El Juez | *"Chocaron, ¿quién gana?"* |
 | 🧭 | **Odiseo** | — | El Estratega | *"Probemos algo barato primero"* |
-| 🧶 | **Ariadna** | — | Plan de Rescate | Solo si Score < 60% |
+| 🧶 | **Isis** | — | Plan de Rescate | Solo si Score < 60% |
 
 **Reglas de formato en outputs:**
 - Toda personalidad debe aparecer como `[emoji] [Nombre] (Rol · Peso%)`
-- Ejemplo: `🔥 Prometeo (Visionario · 7%)`
+- Ejemplo: `👁️ Adán (Visionario · 7%)`
 - Prohibido usar apodos fuera de la tabla canónica
