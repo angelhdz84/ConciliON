@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concili_ON — Fintech Pagos con Crypto</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f9fa;color:#1a1a2e;line-height:1.6;padding:20px}
+.container{max-width:1200px;margin:0 auto}
+h1{font-size:2rem;margin-bottom:10px;color:#1a1a2e}
+h2{font-size:1.5rem;margin:30px 0 15px;color:#1a1a2e;border-bottom:2px solid #e9ecef;padding-bottom:8px}
+h3{font-size:1.2rem;margin:20px 0 10px;color:#1a1a2e}
+.card{background:#fff;border-radius:12px;padding:20px;margin:15px 0;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.header-info{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.header-info span{background:#e9ecef;padding:6px 12px;border-radius:20px;font-size:0.9rem}
+.gauge-container{display:flex;justify-content:center;margin:30px 0}
+.gauge-svg{width:250px;height:250px}
+.score-label{font-size:3rem;font-weight:bold;fill:#1a1a2e}
+.score-subtitle{font-size:1rem;fill:#6c757d}
+.veredicto{padding:20px;border-radius:12px;text-align:center;margin:20px 0;font-size:1.3rem;font-weight:bold}
+.veredicto.pivote{background:#ffeaa7;color:#856404;border:2px solid #fdcb6e}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.score-item{background:#fff;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.score-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.score-name{font-weight:bold;font-size:1.1rem}
+.score-badge{background:#e9ecef;padding:4px 10px;border-radius:15px;font-size:0.85rem}
+.score-bar{height:12px;background:#e9ecef;border-radius:6px;overflow:hidden;margin:10px 0}
+.score-fill{height:100%;border-radius:6px;transition:width 0.3s}
+.score-reading{font-size:0.9rem;color:#6c757d;margin-top:8px}
+.waterfall{margin:20px 0}
+.waterfall-item{display:flex;align-items:center;margin:8px 0}
+.waterfall-label{width:200px;font-weight:500}
+.waterfall-bar{flex:1;height:24px;background:#e9ecef;border-radius:4px;position:relative;overflow:hidden}
+.waterfall-fill{height:100%;border-radius:4px;position:absolute}
+.waterfall-value{width:60px;text-align:right;font-weight:bold;font-size:0.9rem}
+.contradiccion-card{border-radius:12px;padding:15px;margin:10px 0;border-left:5px solid}
+.contradiccion-card.critica{background:#f8d7da;border-color:#dc3545}
+.contradiccion-card.importante{background:#fff3cd;border-color:#ffc107}
+.contradiccion-card.menor{background:#d1ecf1;border-color:#17a2b8}
+.contradiccion-header{display:flex;justify-content:space-between;align-items:center}
+.contradiccion-grado{padding:4px 10px;border-radius:15px;font-size:0.85rem;font-weight:bold}
+.contradiccion-grado.critica{background:#dc3545;color:#fff}
+.contradiccion-grado.importante{background:#ffc107;color:#856404}
+.contradiccion-grado.menor{background:#17a2b8;color:#fff}
+.consejo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+.consejo-item{background:#fff;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.08);text-align:center}
+.consejo-emoji{font-size:2rem;margin-bottom:8px}
+.consejo-nombre{font-weight:bold;font-size:1.1rem}
+.consejo-rol{color:#6c757d;font-size:0.9rem}
+.consejo-voto{margin-top:10px;padding:8px;border-radius:8px;font-weight:bold}
+.consejo-voto.favor{background:#d4edda;color:#155724}
+.consejo-voto.contra{background:#f8d7da;color:#721c24}
+.consejo-voto.condicional{background:#fff3cd;color:#856404}
+.tally{display:flex;gap:30px;justify-content:center;margin:20px 0;font-size:1.2rem}
+.tally-item{text-align:center}
+.tally-num{font-size:2rem;font-weight:bold}
+.tally-label{font-size:0.9rem;color:#6c757d}
+.polarizacion{display:flex;align-items:center;gap:15px;margin:15px 0}
+.polarizacion-nivel{padding:8px 16px;border-radius:20px;font-weight:bold}
+.polarizacion-nivel.baja{background:#d4edda;color:#155724}
+.polarizacion-nivel.media{background:#fff3cd;color:#856404}
+.polarizacion-nivel.alta{background:#f8d7da;color:#721c24}
+.incerteza-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #e9ecef}
+.incerteza-item:last-child{border-bottom:none}
+.tabla-calculo{width:100%;border-collapse:collapse;margin:15px 0}
+.tabla-calculo th,.tabla-calculo td{padding:10px;text-align:left;border-bottom:1px solid #e9ecef}
+.tabla-calculo th{background:#f8f9fa;font-weight:600}
+.tabla-calculo .total{font-weight:bold;background:#e9ecef}
+.formula{background:#f8f9fa;padding:15px;border-radius:8px;font-family:monospace;margin:15px 0;white-space:pre-line}
+.isis-section{background:linear-gradient(135deg,#fff 0%,#f3e5f5 100%);border:2px solid #9c27b0;border-radius:12px;padding:20px;margin:20px 0}
+.isis-header{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+.isis-header h3{margin:0;color:#9c27b0}
+.mitigacion-item{background:#fff;border-radius:8px;padding:12px;margin:8px 0;border-left:4px solid #9c27b0}
+.pregunta-socratica{background:#fff;border-radius:8px;padding:12px;margin:8px 0;border-left:4px solid #ff9800;font-style:italic}
+@media(max-width:768px){
+.header-info{flex-direction:column}
+.score-grid{grid-template-columns:1fr}
+.consejo-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.tally{flex-direction:column;gap:15px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>📊 Concili_ON — Análisis de Viabilidad</h1>
+
+<div class="header-info">
+<span>📅 Fecha: 13 Julio 2026</span>
+<span>🏷️ Slug: fintech-pagos-crypto</span>
+<span>🔄 Versión: 2.3</span>
+</div>
+
+<div class="card">
+<h2>💡 Idea Evaluada</h2>
+<p><strong>Problema:</strong> Los freelancers en LATAM pierden 8-12% en comisiones de cobro internacional y tardan 3-5 días en recibir pagos.</p>
+<p><strong>Solución:</strong> Wallet crypto que permite cobrar en stablecoins (USDT/USDC) con conversión automática a fiat y tarjeta de débito vinculada.</p>
+<p><strong>Cliente objetivo:</strong> Freelancers y consultores independientes que trabajan con clientes en EE.UU. y Europa.</p>
+<p><strong>Modelo de negocio:</strong> 1.5% por conversión + $4.99/mes por tarjeta + interchange en pagos.</p>
+</div>
+
+<div class="gauge-container">
+<svg class="gauge-svg" viewBox="0 0 200 200">
+<circle cx="100" cy="100" r="85" fill="none" stroke="#e9ecef" stroke-width="20"/>
+<circle cx="100" cy="100" r="85" fill="none" stroke="#fdcb6e" stroke-width="20" 
+stroke-dasharray="534" stroke-dashoffset="289" stroke-linecap="round"
+transform="rotate(-90 100 100)"/>
+<text x="100" y="95" text-anchor="middle" class="score-label">46%</text>
+<text x="100" y="120" text-anchor="middle" class="score-subtitle">Score Real</text>
+</svg>
+</div>
+
+<div class="veredicto pivote">
+🟠 <strong>REQUIERE PIVOTE SIGNIFICATIVO</strong> — Volver a Fase 1 con datos de mercado y compliance.
+</div>
+
+<h2>📋 Scores por Personalidad</h2>
+<div class="score-grid">
+
+<div class="score-item">
+<div class="score-header">
+<span class="score-name">👁️ Adán (Visionario)</span>
+<span class="score-badge">7%</span>
+</div>
+<div class="score-bar"><div class="score-fill" style="width:80%;background:#28a745"></div></div>
+<div><strong>8/10</strong></div>
+<div class="score-reading">El mercado de pagos internacionales mueve $190B anuales. Los freelancers son un nicho creciente. <strong>Visión a 5 años:</strong> Estándar de cobro para nómadas digitales en LATAM.</div>
+</div>
+
+<div class="score-item">
+<div class="score-header">
+<span class="score-name">🛡️ Eva (Risk Manager)</span>
+<span class="score-badge">15%</span>
+</div>
+<div class="score-bar"><div class="score-fill" style="width:20%;background:#dc3545"></div></div>
+<div><strong>2/10</strong></div>
+<div class="score-reading">Riesgo 🔴 Crítico: regulación crypto en LATAM es incierta. Riesgo 🔴 Crítico: licencias FINMA/Condusef necesarias. Riesgo 🟠 Importante: volatilidad de stablecoins. Riesgo 🟠 Importante: compliance AML/KYC complejo.</div>
+</div>
+
+<div class="score-item">
+<div class="score-header">
+<span class="score-name">📢 Hermes (Mensajero)</span>
+<span class="score-badge">7%</span>
+</div>
+<div class="score-bar"><div class="score-fill" style="width:50%;background:#ffc107"></div></div>
+<div><strong>5/10</strong></div>
+<div class="score-reading">La idea es confusa para el usuario promedio. "¿Stablecoins? ¿Qué es eso?" Necesita explicar el beneficio sin jerga crypto. El nombre del producto no comunica valor.</div>
+</div>
+
+<div class="score-item">
+<div class="score-header">
+<span class="score-name">💰 Midas (El Cliente)</span>
+<span class="score-badge">25%</span>
+</div>
+<div class="score-bar"><div class="score-fill" style="width:60%;background:#ffc107"></div></div>
+<div><strong>6/10</strong></div>
+<div class="score-reading">Alternativa actual: Wise, Payoneer, PayPal. Competidor fuerte: Wise (comisiones bajas, confiable). Ventaja: settlement inmediato. Motivo para cambiar: DÉBIL — Wise ya resuelve el problema principal.</div>
+</div>
+
+<div class="score-item">
+<div class="score-header">
+<span class="score-name">🧒 Loki (Niño UX)</span>
+<span class="score-badge">6%</span>
+</div>
+<div class="score-bar"><div class="score-fill" style="width:40%;background:#ffc107"></div></div>
+<div><strong>4/10</strong></div>
+<div class="score-reading">La curva de aprendizaje de crypto es alta. Configurar wallets, entender stablecoins, vincular tarjetas... Un freelancer promedio abandonaría en el onboarding.</div>
+</div>
+
+<div class="score-item">
+<div class="score-header">
+<span class="score-name">🔧 Tesla (Ingeniero)</span>
+<span class="score-badge">15%</span>
+</div>
+<div class="score-bar"><div class="score-fill" style="width:30%;background:#dc3545"></div></div>
+<div><strong>3/10</strong></div>
+<div class="score-reading"><strong>Complejidad técnica:</strong> Muy Alta. <strong>Dependencias:</strong> Blockchain, exchanges, reguladores, bancos, tarjetas. <strong>MVP:</strong> 6+ meses. Integrar crypto + fiat + compliance = nightmare técnico.</div>
+</div>
+
+<div class="score-item">
+<div class="score-header">
+<span class="score-name">📊 Dédalo (Financiero)</span>
+<span class="score-badge">25%</span>
+</div>
+<div class="score-bar"><div class="score-fill" style="width:40%;background:#dc3545"></div></div>
+<div><strong>4/10</strong></div>
+<div class="score-reading"><strong>Inversión inicial:</strong> $2.5M - $4M USD. <strong>Primer ingreso:</strong> 6+ meses. <strong>Margen bruto:</strong> 35%. <strong>Punto de equilibrio:</strong> 18+ meses. <strong>Mayor gasto:</strong> Compliance y licencias (45%).</div>
+</div>
+
+</div>
+
+<h2>🧮 Cálculo del Score</h2>
+<div class="card">
+<table class="tabla-calculo">
+<thead><tr><th>Personalidad</th><th>Score</th><th>Peso</th><th>Contribución</th></tr></thead>
+<tbody>
+<tr><td>📊 Dédalo</td><td>4</td><td>25%</td><td>1.00</td></tr>
+<tr><td>💰 Midas</td><td>6</td><td>25%</td><td>1.50</td></tr>
+<tr><td>🛡️ Eva</td><td>2</td><td>15%</td><td>0.30</td></tr>
+<tr><td>🔧 Tesla</td><td>3</td><td>15%</td><td>0.45</td></tr>
+<tr><td>👁️ Adán</td><td>8</td><td>7%</td><td>0.56</td></tr>
+<tr><td>📢 Hermes</td><td>5</td><td>7%</td><td>0.35</td></tr>
+<tr><td>🧒 Loki</td><td>4</td><td>6%</td><td>0.24</td></tr>
+<tr class="total"><td><strong>TOTAL</strong></td><td></td><td></td><td><strong>4.40</strong></td></tr>
+</tbody>
+</table>
+<div class="formula">Score Matemático: 4.40 / 10 = 44%
+Penalización Zeus: -0% (ya reflejado en scores bajos)
+<strong>Score Real: 46%</strong></div>
+</div>
+
+<h2>⚡ Polarización del Consejo</h2>
+<div class="card">
+<div class="polarizacion">
+<span>Desviación estándar (σ):</span>
+<span class="polarizacion-nivel alta">🔴 Alta (σ = 2.1)</span>
+</div>
+<p>El consejo está dividido. Adán ve oportunidad enorme, pero Eva y Tesla señalan riesgos críticos.</p>
+</div>
+
+<h2>🎯 Contradicciones Detectadas</h2>
+<div class="card">
+<div class="contradiccion-card critica">
+<div class="contradiccion-header">
+<span>👁️ Adán vs 🛡️ Eva</span>
+<span class="contradiccion-grado critica">Crítica</span>
+</div>
+<p><strong>Tensión:</strong> Visión de mercado vs Riesgos regulatorios</p>
+<p><strong>Penalización:</strong> -15% — El mercado es grande pero la regulación puede matar el proyecto</p>
+</div>
+
+<div class="contradiccion-card critica">
+<div class="contradiccion-header">
+<span>🔧 Tesla vs 💰 Midas</span>
+<span class="contradiccion-grado critica">Crítica</span>
+</div>
+<p><strong>Tensión:</strong> Complejidad técnica vs Competencia existente</p>
+<p><strong>Penalización:</strong> -8% — Wise ya resuelve el problema con menos complejidad</p>
+</div>
+
+<div class="contradiccion-card importante">
+<div class="contradiccion-header">
+<span>📊 Dédalo vs 👁️ Adán</span>
+<span class="contradiccion-grado importante">Importante</span>
+</div>
+<p><strong>Tensión:</strong> Costos altos vs Potencial de mercado</p>
+<p><strong>Penalización:</strong> -8% — La inversión inicial es desproporcionada para un freelancer promedio</p>
+</div>
+</div>
+
+<h2>🧭 Experimento de Odiseo</h2>
+<div class="card">
+<p><strong>Hipótesis:</strong> Los freelancers pagarían por una alternativa a Wise que les permita recibir pagos en crypto.</p>
+<p><strong>Experimento:</strong> Encuesta + landing page + waitlist. No construir nada.</p>
+<p><strong>Duración:</strong> 1 semana</p>
+<p><strong>Costo máximo:</strong> $2,000 MXN</p>
+<p><strong>Usuarios mínimos:</strong> 100 freelancers</p>
+<p><strong>KPI de éxito:</strong> Tasa de conversión de waitlist</p>
+<p><strong>Criterio de éxito:</strong> ≥20% se registran (20 de 100)</p>
+<p><strong>Criterio para abandonar:</strong> <10% se registran</p>
+</div>
+
+<h2>🗳️ Consejo de Inversión</h2>
+<div class="consejo-grid">
+<div class="consejo-item">
+<div class="consejo-emoji">👁️</div>
+<div class="consejo-nombre">Adán</div>
+<div class="consejo-rol">Visionario · 7%</div>
+<div class="consejo-voto condicional">⏳ Solo después de validar</div>
+</div>
+<div class="consejo-item">
+<div class="consejo-emoji">🛡️</div>
+<div class="consejo-nombre">Eva</div>
+<div class="consejo-rol">Risk Manager · 15%</div>
+<div class="consejo-voto contra">❌ No invertiría</div>
+</div>
+<div class="consejo-item">
+<div class="consejo-emoji">📢</div>
+<div class="consejo-nombre">Hermes</div>
+<div class="consejo-rol">Mensajero · 7%</div>
+<div class="consejo-voto contra">❌ No invertiría</div>
+</div>
+<div class="consejo-item">
+<div class="consejo-emoji">💰</div>
+<div class="consejo-nombre">Midas</div>
+<div class="consejo-rol">El Cliente · 25%</div>
+<div class="consejo-voto condicional">⏳ Solo después de validar</div>
+</div>
+<div class="consejo-item">
+<div class="consejo-emoji">🧒</div>
+<div class="consejo-nombre">Loki</div>
+<div class="consejo-rol">Niño UX · 6%</div>
+<div class="consejo-voto contra">❌ No invertiría</div>
+</div>
+<div class="consejo-item">
+<div class="consejo-emoji">🔧</div>
+<div class="consejo-nombre">Tesla</div>
+<div class="consejo-rol">Ingeniero · 15%</div>
+<div class="consejo-voto contra">❌ No invertiría</div>
+</div>
+<div class="consejo-item">
+<div class="consejo-emoji">📊</div>
+<div class="consejo-nombre">Dédalo</div>
+<div class="consejo-rol">Financiero · 25%</div>
+<div class="consejo-voto contra">❌ No invertiría</div>
+</div>
+</div>
+
+<div class="card">
+<div class="tally">
+<div class="tally-item">
+<div class="tally-num" style="color:#28a745">0</div>
+<div class="tally-label">✅ A favor</div>
+</div>
+<div class="tally-item">
+<div class="tally-num" style="color:#dc3545">5</div>
+<div class="tally-label">❌ En contra</div>
+</div>
+<div class="tally-item">
+<div class="tally-num" style="color:#ffc107">2</div>
+<div class="tally-label">⏳ Condicionales</div>
+</div>
+</div>
+<p style="text-align:center;margin-top:15px"><strong>Decisión del Consejo:</strong> Rechazaría invertir. Demasiados riesgos regulatorios y complejidad técnica sin ventaja clara sobre Wise.</p>
+</div>
+
+<h2>📊 Índice de Incertidumbre</h2>
+<div class="card">
+<div class="incerteza-item">
+<span>Aprobación regulatoria en LATAM</span>
+<span>±15%</span>
+</div>
+<div class="incerteza-item">
+<span>Costo real de compliance</span>
+<span>±10%</span>
+</div>
+<div class="incerteza-item">
+<span>Adopción vs Wise</span>
+<span>±8%</span>
+</div>
+<div class="incerteza-item" style="font-weight:bold;border-top:2px solid #1a1a2e;padding-top:10px">
+<span><strong>Rango probable real:</strong></span>
+<span><strong>28% - 64%</strong></span>
+</div>
+</div>
+
+<div class="isis-section">
+<div class="isis-header">
+<span style="font-size:2rem">🧶</span>
+<h3>Isis — Plan de Rescate</h3>
+</div>
+<p><strong>Modo:</strong> Ligero (Score Real 40-59%)</p>
+
+<h4>Diagnóstico del rechazo</h4>
+<table class="tabla-calculo">
+<thead><tr><th>Factor</th><th>Peso</th><th>Responsable</th></tr></thead>
+<tbody>
+<tr><td>Riesgos regulatorios desconocidos</td><td>Alto</td><td>🛡️ Eva</td></tr>
+<tr><td>Complejidad técnica desproporcionada</td><td>Alto</td><td>🔧 Tesla</td></tr>
+<tr><td>Competencia fuerte (Wise)</td><td>Medio</td><td>💰 Midas</td></tr>
+</tbody>
+</table>
+
+<h4>Matriz de Apalancamiento</h4>
+<table class="tabla-calculo">
+<thead><tr><th>Palanca</th><th>Impacto</th><th>Esfuerzo</th><th>Score Proyectado</th></tr></thead>
+<tbody>
+<tr><td>Pivotear a B2B (empresas que pagan freelance)</td><td>+15%</td><td>Medio</td><td>61%</td></tr>
+<tr><td>Eliminar crypto, usar solo transferencias</td><td>+20%</td><td>Bajo</td><td>66%</td></tr>
+<tr><td>Enfocar solo en México (evitar regulación múltiple)</td><td>+10%</td><td>Bajo</td><td>56%</td></tr>
+</tbody>
+</table>
+
+<h4>3 Preguntas Socráticas</h4>
+<div class="pregunta-socratica">
+❓ ¿Por qué un freelancer elegiría tu app sobre Wise si Wise ya cobra 0.41% y es confiable?
+</div>
+<div class="pregunta-socratica">
+❓ ¿Qué pasa si mañana México prohíbe las stablecoins? ¿Todavía tienes negocio?
+</div>
+<div class="pregunta-socratica">
+❓ ¿Realmente necesitas crypto para resolver el problema, o es solo la tecnología que te gusta?
+</div>
+
+<h4>Recomendación</h4>
+<p>⏳ <strong>Re-evaluar después de:</strong></p>
+<ul>
+<li>Obtener claridad sobre regulación crypto en México (CONDUSEF)</li>
+<li>Validar con 50 freelancers reales si pagarían por crypto vs transferencia tradicional</li>
+<li>Investigar costos reales de licencias FINMA</li>
+</ul>
+</div>
+
+<div class="card" style="text-align:center;padding:30px">
+<p style="font-size:1.5rem;color:#6c757d">Generado por</p>
+<p style="font-size:2rem;font-weight:bold;color:#1a1a2e">Concili_ON v2.3</p>
+<p style="color:#6c757d">Motor de Validación de Ideas</p>
+</div>
+
+</div>
+</body>
+</html>
